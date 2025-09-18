@@ -53,6 +53,13 @@ spring:
   messages:
     encoding: UTF-8
 
+  # ==================== EMAIL CONFIG ====================
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+
 # Actuator configuration for monitoring and management
 management:
   endpoints:
