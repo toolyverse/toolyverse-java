@@ -1,18 +1,28 @@
 package toolyverse.io.toolyverse;
 
+import jakarta.persistence.EntityListeners;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
 // ╔═══════════════════════════════════════════╗
 // ║    TODO: Add required annotations here    ║
 // ╚═══════════════════════════════════════════╝
 //
-//@EnableScheduling
+@EnableScheduling
+@EnableKafka
+@EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableAsync
 @EnableCaching
+@EntityListeners(AuditingEntityListener.class)
 @EnableConfigurationProperties
 //
 @Slf4j
