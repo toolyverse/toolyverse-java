@@ -1,357 +1,113 @@
-# Operating System Files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-Desktop.ini
+# IntelliJ IDEA
+**/.idea/
+**/*.iml
+**/*.iws
+**/*.ipr
+**/*.iws
+**/.idea_modules/
+**/out/
 
-# Environment Files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env.*.local
-.envrc
-
-# Logs
-*.log
-logs/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-.npm
-
-# Dependency Directories
-node_modules/
-jspm_packages/
-bower_components/
-vendor/
-
-# Build Outputs
-dist/
-build/
-out/
-target/
-bin/
-obj/
-*.o
-*.a
-*.lib
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
-
-# Go Specific
-main
-eazyconf
-*.test
-*.out
-coverage.html
-coverage.txt
-go.work
-go.work.sum
-Godeps/
+# VS Code
+**/.vscode/
+**/*.code-workspace
+**/.history/
 
 # Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-.pytest_cache/
-.coverage
-htmlcov/
-.tox/
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+**/.Python
+**/env/
+**/build/
+**/develop-eggs/
+**/dist/
+**/downloads/
+**/eggs/
+**/.eggs/
+**/lib/
+**/lib64/
+**/parts/
+**/sdist/
+**/var/
+**/*.egg-info/
+**/.installed.cfg
+**/*.egg
+**/.pytest_cache/
+**/.coverage
+**/htmlcov/
+**/.tox/
 
-# Java/Kotlin
-*.class
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
-.gradle/
-gradle-app.setting
-!gradle-wrapper.jar
-.gradletasknamecache
-
-# Maven
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
-.mvn/wrapper/maven-wrapper.jar
-
-# IDE Files
-## IntelliJ IDEA
-.idea/
-*.iml
-*.iws
-*.ipr
-out/
-.idea_modules/
-
-## Visual Studio Code
-.vscode/
-*.code-workspace
-.history/
-
-## Eclipse
-.metadata
-.classpath
-.project
-.settings/
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.loadpath
-.recommenders
-
-## Vim
-*.swp
-*.swo
-*~
-
-## Emacs
-*~
-\#*\#
-/.emacs.desktop
-/.emacs.desktop.lock
-*.elc
-auto-save-list
-tramp
-.\#*
-
-## Sublime Text
-*.tmlanguage.cache
-*.tmPreferences.cache
-*.stTheme.cache
-*.sublime-workspace
-*.sublime-project
-
-# Database Files
-*.db
-*.sqlite
-*.sqlite3
-*.db3
-mysql_data/
-
-# Docker
-.dockerignore
-docker-compose.override.yml
-
-# Temporary Files
-tmp/
-temp/
-.tmp/
-.temp/
-
-# Test Coverage
-coverage/
-.nyc_output/
-.coverage
-lcov.info
-clover.xml
-
-# Runtime Data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Compiled Binary Addons
-*.node
-
-# Optional npm Cache Directory
-.npm
-
-# Optional ESLint Cache
-.eslintcache
-
-# Microbundle Cache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
-
-# Optional REPL History
-.node_repl_history
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity File
-.yarn-integrity
-
-# TypeScript
-*.tsbuildinfo
-
-# Next.js
-.next/
-
-# Nuxt.js
-.nuxt/
-
-# Gatsby
-.cache/
-public
-
-# Storybook
-.out
-.storybook-out
-
-# React Native
-ios/Pods/
-.buckd/
-buck-out/
-*.keystore
-!debug.keystore
-.metro-health-check*
+# Node.js
+**/node_modules/
+**/npm-debug.log
+**/yarn-debug.log
+**/yarn-error.log
+**/.env
+**/.env.test
+**/.cache/
+**/coverage/
+**/.nyc_output/
 
 # Flutter/Dart
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.packages
-.pub-cache/
-.pub/
-ios/Pods/
-android/.gradle
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.packages
+**/.pub-cache/
+**/.pub/
+**/build/
+**/ios/Pods/
+**/android/.gradle
 
-# Android
-*.apk
-*.ap_
-*.aab
-*.dex
-gen/
-captures/
-.navigation/
-local.properties
-proguard/
-.externalNativeBuild/
-.cxx/
+# Maven/Gradle
+**/target/
+**/.gradle/
+**/build/
+**/gradle-app.setting
+!**/gradle-wrapper.jar
+**/.gradletasknamecache
 
-# iOS
-ios/build/
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-xcuserdata/
-*.xccheckout
-*.moved-aside
-DerivedData
-*.hmap
-*.ipa
-*.xcuserstate
+# Go
+**/*.exe
+**/*.exe~
+**/*.dll
+**/*.so
+**/*.dylib
+**/*.test
+**/*.out
+**/go.work
+**/vendor/
+**/Godeps/
 
-# Unity
-[Ll]ibrary/
-[Tt]emp/
-[Oo]bj/
-[Bb]uild/
-[Bb]uilds/
-Assets/AssetStoreTools*
+# Android Studio
+**/*.apk
+**/*.ap_
+**/*.aab
+**/*.dex
+**/*.class
+**/bin/
+**/gen/
+**/captures/
+**/.navigation/
+**/local.properties
+**/proguard/
+**/.externalNativeBuild/
+**/.cxx/
 
-# MonoDevelop
-[Ee]xported[Oo]bj/
-.consulo/
-*.csproj
-*.unityproj
-*.sln
-*.suo
-*.tmp
-*.user
-*.userprefs
-*.pidb
-*.booproj
-*.svd
-*.pdb
+# React Native
+**/ios/Pods/
+**/.buckd/
+**/buck-out/
+**/*.keystore
+!**/debug.keystore
+**/.metro-health-check*
+**/.xcode.env.local
+**/.xcodebuild/
 
-# Rust
-target/
-Cargo.lock
-
-# C/C++
-*.d
-*.slo
-*.lo
-*.ko
-*.obj
-*.elf
-*.ilk
-*.map
-*.exp
-*.gch
-*.pch
-*.lib
-*.lai
-*.la
-*.ipa
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# PHP
-/bootstrap/compiled.php
-/vendor
-composer.phar
-composer.lock
-.env.*.php
-.env.php
-
-# Archives
-*.7z
-*.dmg
-*.gz
-*.iso
-*.rar
-*.tar
-*.zip
-
-# Certificates
-*.pem
-*.key
-*.cert
-*.crt
-*.p12
-*.pfx
-
-# Secrets
-secrets/
-secret.yaml
-secret.yml
+# General
+**/*.log
+**/*.bak
+**/*.swp
+**/*~
+**/.DS_Store
+**/Thumbs.db

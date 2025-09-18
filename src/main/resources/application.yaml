@@ -1,0 +1,124 @@
+# ==================== APPLICATION CONFIGURATION ====================
+spring:
+  application:
+    name: toolyverse
+
+  profiles:
+    default: dev
+
+  # ==================== DATASOURCE CONFIGURATION ====================
+  data:
+    jdbc:
+      dialect: mysql
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 15
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.format_sql: true
+      envers:
+        audit_table_suffix: _history
+
+  # ==================== KAFKA CONFIGURATION ====================
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+    # ==================== KAFKA PRODUCER CONFIG ====================
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all
+    # ==================== KAFKA CONSUMER CONFIG ====================
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP_ID}
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
+      enable-auto-commit: false
+  messages:
+    encoding: UTF-8
+
+# Actuator configuration for monitoring and management
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+  server:
+    port: 8081
+  tracing:
+    sampling:
+      probability: '1.0'
+
+# Logging configuration
+logging:
+  level:
+    root: info
+    toolyverse.io: debug
+
+# ==================== SWAGGER CONFIGURATION ====================
+springdoc:
+  swagger-ui:
+    enabled: true
+
+# ==================== SECURITY CONFIGURATION ====================
+security:
+  ignored-paths:
+    - "/**"
+    - "/swagger-resources/**"
+    - "/swagger-ui.html/**"
+    - "/swagger-ui/**"
+    - "/v3/api-docs/**"
+    - "/auth/**"
+    - "/public/**"
+    - "/timezone"
+    - "/time"
+    - "/hello"
+    - "/log-level"
+    # Actuator endpoints
+    - "/actuator/**"
+
+# ==================== APP SPECIFIC CONFIGURATION ====================
+app-specific-configs:
+  constants:
+    default-auditor: SYSTEM
+  cache:
+    short:
+      ttl: 60
+    medium:
+      ttl: 120
+    default:
+      max-size: 1000
+  security:
+    jwt:
+      secret-key: ${APP_JWT_SECRET_KEY}
+      refresh-token-validity-in-minutes: 90
+      token-validity-in-minutes: 60
+    encryption:
+      secret: ${APP_ENC_SECRET}
+  api:
+    auth:
+      username: ${API_USERNAME}
+      password: ${API_PASSWORD}
+      token: ${API_TOKEN}
+  storage:
+    directory: ./storage
+    allowed-extensions: jpg,jpeg,png,pdf,doc,docx

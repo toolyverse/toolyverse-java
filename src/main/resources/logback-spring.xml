@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!--    config and environment variables-->
+    <springProperty scope="context" name="springAppName" source="spring.application.name" defaultValue="application"/>
+    <!-- Environment variables with fallback values -->
+    <property name="LOG_PATH" value="${LOG_PATH:-./logs}"/>
+
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %yellow([${springAppName}]) %X{traceId:- } %X{USERNAME_MDC:- } %cyan(%logger{36}) [%file:%line] - %msg%n"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- Logstash Appender -->
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>localhost:5000</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>{"type":"spring-boot-log","application":"spring-boot-project"}</customFields>
+            <!-- Include the trace ID in the structured log output -->
+            <fieldNames>
+                <traceId>trace_id</traceId>
+            </fieldNames>
+            <!-- Include the logger name, thread, and line number -->
+            <includeCallerData>true</includeCallerData>
+        </encoder>
+    </appender>
+
+    <!-- Root Logger -->
+    <root level="info">
+        <appender-ref ref="CONSOLE"/>
+<!--        <appender-ref ref="LOGSTASH"/>-->
+    </root>
+
+</configuration>
