@@ -1,4 +1,4 @@
-package toolyverse.io.toolyverse;
+package toolyverse.io.toolyverse.infrastructure.config.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import toolyverse.io.toolyverse.infrastructure.config.properties.SecurityProperties;
 
 @Slf4j
 @Configuration
