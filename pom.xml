@@ -28,76 +28,176 @@
     </scm>
     <properties>
         <java.version>25</java.version>
+
+        <!-- Core Framework Versions -->
+        <spring-boot.version>3.5.6</spring-boot.version>
+        <spring.version>6.2.11</spring.version>
+        <spring-cloud.version>2025.0.0</spring-cloud.version>
+        <spring-data.version>3.5.4</spring-data.version>
+        <spring-security.version>6.5.5</spring-security.version>
+        <spring-batch.version>5.2.3</spring-batch.version>
+        <spring-kafka.version>3.3.10</spring-kafka.version>
+        <spring-grpc.version>0.11.0</spring-grpc.version>
+
+        <!-- Database & Persistence -->
+        <hibernate.version>6.6.29.Final</hibernate.version>
+        <hikari.version>6.3.3</hikari.version>
+        <jakarta.persistence.version>3.1.0</jakarta.persistence.version>
+
+        <!-- Messaging & Communication -->
         <grpc.version>1.74.0</grpc.version>
         <protobuf-java.version>4.31.1</protobuf-java.version>
-        <spring-cloud.version>2025.0.0</spring-cloud.version>
-        <spring-grpc.version>0.11.0</spring-grpc.version>
+        <kafka.version>3.9.1</kafka.version>
+        <netty.version>4.1.127.Final</netty.version>
+
+        <!-- Observability & Monitoring -->
+        <micrometer.version>1.15.4</micrometer.version>
+        <micrometer-tracing.version>1.5.4</micrometer-tracing.version>
+        <brave.version>6.1.0</brave.version>
+
+        <!-- Resilience & Circuit Breaker -->
+        <resilience4j.version>2.2.0</resilience4j.version>
+        <openfeign.version>13.6</openfeign.version>
+
+        <!-- Template Engines -->
+        <thymeleaf.version>3.1.3.RELEASE</thymeleaf.version>
+        <freemarker.version>2.3.34</freemarker.version>
+
+        <!-- Serialization & Data Processing -->
+        <jackson.version>2.19.2</jackson.version>
+        <json-smart.version>2.5.2</json-smart.version>
+
+        <!-- Security & Authentication -->
+        <nimbus-jose-jwt.version>9.37.4</nimbus-jose-jwt.version>
+        <oauth2-oidc-sdk.version>9.43.6</oauth2-oidc-sdk.version>
+        <bouncycastle.version>1.80</bouncycastle.version>
+
+        <!-- Caching -->
+        <lettuce.version>6.6.0.RELEASE</lettuce.version>
+
+        <!-- Scheduling -->
+        <quartz.version>2.5.0</quartz.version>
+
+        <!-- Logging -->
+        <logback.version>1.5.18</logback.version>
+        <slf4j.version>2.0.17</slf4j.version>
+        <log4j.version>2.24.3</log4j.version>
+
+        <!-- Utilities -->
+        <commons-lang3.version>3.17.0</commons-lang3.version>
+        <commons-text.version>1.13.0</commons-text.version>
+        <guava.version>33.3.1-jre</guava.version>
+        <lombok.version>1.18.40</lombok.version>
+
+        <!-- Validation -->
+        <hibernate-validator.version>8.0.3.Final</hibernate-validator.version>
+        <jakarta.validation.version>3.0.2</jakarta.validation.version>
+
+        <!-- Build Tools -->
+        <aspectj.version>1.9.24</aspectj.version>
+        <asm.version>9.7.1</asm.version>
+
+        <!-- File Processing -->
+        <commons-fileupload.version>1.5</commons-fileupload.version>
+
+        <!-- Configuration -->
+        <snakeyaml.version>2.4</snakeyaml.version>
+
+        <!-- Embedded Server -->
+        <tomcat.version>10.1.46</tomcat.version>
+
+        <!-- Plugin Versions -->
+        <protobuf-maven-plugin.version>3.8.0</protobuf-maven-plugin.version>
     </properties>
+
     <dependencies>
+        <!-- Spring Boot Starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-batch</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-quartz</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
+
+        <!-- gRPC Dependencies -->
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-services</artifactId>
+            <version>${grpc.version}</version>
         </dependency>
+
+        <!-- Observability -->
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-tracing-bridge-brave</artifactId>
+            <version>${micrometer-tracing.version}</version>
         </dependency>
+
+        <!-- Spring Cloud Dependencies -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
@@ -106,19 +206,28 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+
+        <!-- Spring gRPC -->
         <dependency>
             <groupId>org.springframework.grpc</groupId>
             <artifactId>spring-grpc-server-web-spring-boot-starter</artifactId>
         </dependency>
+
+        <!-- Spring Kafka -->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
+            <version>${spring-kafka.version}</version>
         </dependency>
+
+        <!-- Thymeleaf Security Integration -->
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+            <version>${thymeleaf.version}</version>
         </dependency>
 
+        <!-- Runtime Dependencies -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -132,31 +241,41 @@
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>${micrometer.version}</version>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- Optional Dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
+            <version>${spring-boot.version}</version>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
             <optional>true</optional>
         </dependency>
+
+        <!-- Test Dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring-boot.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-testcontainers</artifactId>
+            <version>${spring-boot.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.batch</groupId>
             <artifactId>spring-batch-test</artifactId>
+            <version>${spring-batch.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -167,11 +286,13 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka-test</artifactId>
+            <version>${spring-kafka.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
+            <version>${spring-security.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -190,6 +311,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -230,7 +352,7 @@
             <plugin>
                 <groupId>io.github.ascopes</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>${protobuf-maven-plugin.version}</version>
                 <configuration>
                     <protocVersion>${protobuf-java.version}</protocVersion>
                     <binaryMavenPlugins>
@@ -265,5 +387,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
