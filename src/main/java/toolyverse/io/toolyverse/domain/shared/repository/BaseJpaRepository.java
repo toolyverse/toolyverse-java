@@ -19,7 +19,7 @@ public interface BaseJpaRepository<T extends BaseEntity, ID> extends JpaReposito
 
     @Transactional
     @Modifying
-    @Query("UPDATE #{#entityName} e SET e.deleted = true, e.deleteReason = :reason WHERE e.id = :id")
+    @Query("UPDATE #{#entityName} e SET e.deletedAt = CURRENT_TIMESTAMP WHERE e.id = :id")
     void softDelete(@Param("id") ID id, @Param("reason") String reason);
 
     default Optional<T> findById(ID id, DeletedStatus deletedStatus) {
