@@ -11,7 +11,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 @RestController
-@RequestMapping("/api/v1/s3/files")
+@RequestMapping("/api/v1/s3")
 @RequiredArgsConstructor
 public class S3Controller {
 
