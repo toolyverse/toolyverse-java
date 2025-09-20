@@ -231,6 +231,12 @@
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
         </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+            <version>2.33.13</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- Test Dependencies -->
         <dependency>
