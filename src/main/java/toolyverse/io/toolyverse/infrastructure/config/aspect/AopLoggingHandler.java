@@ -1,6 +1,5 @@
 package toolyverse.io.toolyverse.infrastructure.config.aspect;
 
-import toolyverse.io.toolyverse.infrastructure.exception.BusinessException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -11,6 +10,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import toolyverse.io.toolyverse.infrastructure.exception.BusinessException;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -59,6 +59,7 @@ public class AopLoggingHandler {
     @Around("applicationPackagePointcut()")
     public Object logAround(ProceedingJoinPoint pjp) throws Throwable {
         var logger = LoggerFactory.getLogger(pjp.getSignature().getDeclaringTypeName());
+        long startTime = System.nanoTime();
 
         if (logger.isDebugEnabled()) {
             var stackElem = findAppElement(Thread.currentThread().getStackTrace());
@@ -73,11 +74,15 @@ public class AopLoggingHandler {
 
         var result = pjp.proceed();
 
+        long endTime = System.nanoTime();
+        long executionTime = endTime - startTime;
+
         if (logger.isDebugEnabled()) {
             logger.debug(
-                    "Exit: {} with result: {}",
+                    "Exit: {} with result: {} (took {} ms)",
                     pjp.getSignature().getName(),
-                    formatResult(result)
+                    formatResult(result),
+                    String.format("%.1f", executionTime / 1_000_000.0)
             );
         }
         return result;
