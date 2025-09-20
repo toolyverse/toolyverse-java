@@ -11,13 +11,12 @@ import java.util.Locale;
 
 public class BaseSpecification {
 
-
     public static <T> Specification<T> like(String fieldName, String value) {
         return (root, query, cb) -> {
             if (value == null || value.isEmpty()) return null;
             Expression<String> fieldExpression = root.get(fieldName);
             Expression<String> lowerField = cb.lower(fieldExpression);
-            String lowerCaseValue = value.toLowerCase(new Locale("tr", "TR"));
+            String lowerCaseValue = value.toLowerCase(Locale.of("tr", "TR"));
             return cb.like(lowerField, "%" + lowerCaseValue + "%");
         };
     }
