@@ -7,7 +7,7 @@
     <property name="LOG_PATH" value="${LOG_PATH:-./logs}"/>
 
     <property name="LOG_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %yellow([${springAppName}]) %X{traceId:- } %X{USERNAME_MDC:- } %cyan(%logger{36}) [%file:%line] - %msg%n"/>
+              value="%green(%d{yyyy-MM-dd HH:mm:ss.SSS}) %highlight(%-5level) %magenta([${springAppName}]) %blue([%X{traceId:-}]) %yellow(%X{USERNAME_MDC:-}) %cyan(%logger{36}) %yellow([%file:%line]) - %msg%n"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
