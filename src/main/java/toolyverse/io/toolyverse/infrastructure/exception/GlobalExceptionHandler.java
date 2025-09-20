@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import toolyverse.io.toolyverse.infrastructure.config.message.MessageUtil;
-import toolyverse.io.toolyverse.infrastructure.response.ApiResponse;
+import toolyverse.io.toolyverse.infrastructure.response.ApiResponseWrapper;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -25,9 +25,9 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({BusinessException.class})
-    public ResponseEntity<ApiResponse<Object>> handleCustomException(BusinessException exception) {
+    public ResponseEntity<ApiResponseWrapper<Object>> handleCustomException(BusinessException exception) {
         log.warn("Business exception occurred: {}", exception.getMessage());
-        ApiResponse<Object> response = ApiResponse.error(
+        ApiResponseWrapper<Object> response = ApiResponseWrapper.error(
                 exception.getBusinessErrorCode(),
                 exception.getMessage(),
                 null);
@@ -35,27 +35,27 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class})
-    public final ResponseEntity<ApiResponse<Object>> handleValidationExceptions(Exception ex) {
+    public final ResponseEntity<ApiResponseWrapper<Object>> handleValidationExceptions(Exception ex) {
         Map<String, String> errors = extractValidationErrors(ex);
         log.warn("Validation failed: {}", errors);
-        ApiResponse<Object> response = ApiResponse.error("validation.failed",
+        ApiResponseWrapper<Object> response = ApiResponseWrapper.error("validation.failed",
                 ExceptionMessage.DEFAULT_EXCEPTION.getBusinessErrorCode(),
                 errors);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({NoResourceFoundException.class})
-    public ResponseEntity<ApiResponse<Object>> noResourceFoundException(NoResourceFoundException exception) {
+    public ResponseEntity<ApiResponseWrapper<Object>> noResourceFoundException(NoResourceFoundException exception) {
 //        log.warn("Resource not found: {}", exception.getMessage());
         HttpStatus status = HttpStatus.NOT_FOUND;
-        ApiResponse<Object> response = ApiResponse.error(
+        ApiResponseWrapper<Object> response = ApiResponseWrapper.error(
                 status.value(), MessageUtil.getMessage("error.resource.not.found"),
                 null);
         return new ResponseEntity<>(response, status);
     }
 
     @ExceptionHandler({Exception.class})
-    public final ResponseEntity<ApiResponse<Object>> handleAllException(Exception ex) {
+    public final ResponseEntity<ApiResponseWrapper<Object>> handleAllException(Exception ex) {
         String message;
         HttpStatus status = HttpStatus.BAD_REQUEST;
         int errorCode = ExceptionMessage.DEFAULT_EXCEPTION.getBusinessErrorCode();
@@ -67,7 +67,7 @@ public class GlobalExceptionHandler {
             message = ex.getMessage();
         }
 
-        ApiResponse<Object> response = ApiResponse.error(errorCode, message, null);
+        ApiResponseWrapper<Object> response = ApiResponseWrapper.error(errorCode, message, null);
         return new ResponseEntity<>(response, status);
     }
 

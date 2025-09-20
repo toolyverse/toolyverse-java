@@ -3,8 +3,10 @@ package toolyverse.io.toolyverse.infrastructure.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.slf4j.MDC;
 import org.springframework.data.domain.Page;
 import toolyverse.io.toolyverse.infrastructure.config.message.MessageUtil;
@@ -22,7 +24,9 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @Builder
-public class ApiResponse<T> {
+@NoArgsConstructor
+@AllArgsConstructor
+public class ApiResponseWrapper<T> {
 
     // Define the default message keys
     private static final String DEFAULT_SUCCESS_KEY = "messages.default.success";
@@ -41,23 +45,23 @@ public class ApiResponse<T> {
     private Integer businessErrorCode;
     private Map<String, String> validationErrors;
 
-    public static <T> ApiResponse<T> success(T data) {
+    public static <T> ApiResponseWrapper<T> success(T data) {
         return success(data, DEFAULT_SUCCESS_KEY);
     }
 
-    public static <T> ApiResponse<T> success(T data, String messageKey) {
-        return ApiResponse.<T>builder()
+    public static <T> ApiResponseWrapper<T> success(T data, String messageKey) {
+        return ApiResponseWrapper.<T>builder()
                 .error(false)
                 .message(MessageUtil.getMessage(messageKey))
                 .data(data)
                 .build();
     }
 
-    public static <U> ApiResponse<PageableResponse<U>> success(Page<U> page) {
+    public static <U> ApiResponseWrapper<PageableResponse<U>> success(Page<U> page) {
         return success(page, DEFAULT_SUCCESS_KEY);
     }
 
-    public static <U> ApiResponse<PageableResponse<U>> success(Page<U> page, String messageKey) {
+    public static <U> ApiResponseWrapper<PageableResponse<U>> success(Page<U> page, String messageKey) {
         PageableResponse.PageDetails pageDetails = PageableResponse.PageDetails.builder()
                 .totalElements(page.getTotalElements())
                 .numberOfElements(page.getNumberOfElements())
@@ -72,32 +76,32 @@ public class ApiResponse<T> {
                 .pageable(pageDetails)
                 .build();
 
-        return ApiResponse.<PageableResponse<U>>builder()
+        return ApiResponseWrapper.<PageableResponse<U>>builder()
                 .error(false)
                 .message(MessageUtil.getMessage(messageKey))
                 .data(pageableResponse)
                 .build();
     }
 
-    public static ApiResponse<Object> successWithEmptyData() {
+    public static ApiResponseWrapper<Object> successWithEmptyData() {
         return successWithEmptyData(DEFAULT_SUCCESS_KEY);
     }
 
-    public static ApiResponse<Object> successWithEmptyData(String messageKey) {
-        return ApiResponse.builder()
+    public static ApiResponseWrapper<Object> successWithEmptyData(String messageKey) {
+        return ApiResponseWrapper.builder()
                 .error(false)
                 .message(MessageUtil.getMessage(messageKey))
                 .data(null)
                 .build();
     }
 
-    public static ApiResponse<Object> error(Integer businessErrorCode, Map<String, String> validationErrors) {
+    public static ApiResponseWrapper<Object> error(Integer businessErrorCode, Map<String, String> validationErrors) {
         return error(DEFAULT_ERROR_KEY, businessErrorCode, validationErrors);
     }
 
-    public static ApiResponse<Object> error(String messageKey, Integer businessErrorCode,
-                                            Map<String, String> validationErrors) {
-        return ApiResponse.builder()
+    public static ApiResponseWrapper<Object> error(String messageKey, Integer businessErrorCode,
+                                                   Map<String, String> validationErrors) {
+        return ApiResponseWrapper.builder()
                 .error(true)
                 .message(MessageUtil.getMessage(messageKey))
                 .businessErrorCode(businessErrorCode)
@@ -105,9 +109,9 @@ public class ApiResponse<T> {
                 .build();
     }
 
-    public static ApiResponse<Object> error(Integer businessErrorCode, String customMessage,
-                                            Map<String, String> validationErrors) {
-        return ApiResponse.builder()
+    public static ApiResponseWrapper<Object> error(Integer businessErrorCode, String customMessage,
+                                                   Map<String, String> validationErrors) {
+        return ApiResponseWrapper.builder()
                 .error(true)
                 .message(customMessage)
                 .businessErrorCode(businessErrorCode)
