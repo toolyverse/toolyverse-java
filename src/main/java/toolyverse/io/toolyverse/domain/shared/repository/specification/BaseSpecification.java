@@ -59,7 +59,7 @@ public class BaseSpecification {
             // Convert LocalDate to LocalDateTime for proper comparison
             LocalDateTime startDateTime = start.atStartOfDay();
             LocalDateTime endDateTime = end.atTime(23, 59, 59, 999999999);
-            return cb.between(root.get("createdDate"), startDateTime, endDateTime);
+            return cb.between(root.get("createdAt"), startDateTime, endDateTime);
         };
     }
 

@@ -34,8 +34,8 @@ public class BaseFilterRequest {
     @Pattern(regexp = "^(asc|desc)$", message = "{sort.direction.pattern.exception}")
     private String sortDir = "desc";
 
-    @Schema(description = "Sort by field", example = "createdDate")
-    private String sortBy = "createdDate";
+    @Schema(description = "Sort by field", example = "createdAt")
+    private String sortBy = "createdAt";
 
     @Schema(description = "Filter entity created after this date", example = "2024-01-01")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

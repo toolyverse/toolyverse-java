@@ -2,20 +2,23 @@ package toolyverse.io.toolyverse.domain.lookup.model.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import toolyverse.io.toolyverse.domain.lookup.enumeration.LookupType;
+import toolyverse.io.toolyverse.domain.shared.model.dto.BaseDto;
 
 import java.util.Map;
 
 
-@Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
 @Schema(description = "Data Transfer Object representing a Lookup entity.")
-public class LookupDto {
+public class LookupDto extends BaseDto {
     @Schema(description = "The unique identifier of the lookup entity.", example = "1")
     private Long id;
 

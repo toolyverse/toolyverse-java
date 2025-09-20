@@ -9,14 +9,18 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import toolyverse.io.toolyverse.domain.lookup.model.dto.LookupDto;
 import toolyverse.io.toolyverse.domain.lookup.model.request.CreateLookupCommandRequest;
+import toolyverse.io.toolyverse.domain.lookup.model.request.LookupFilterRequest;
 import toolyverse.io.toolyverse.domain.lookup.model.request.UpdateLookupCommandRequest;
 import toolyverse.io.toolyverse.domain.lookup.service.handler.*;
 import toolyverse.io.toolyverse.infrastructure.response.ApiResponseWrapper;
+import toolyverse.io.toolyverse.infrastructure.response.PageableResponse;
 
 import java.util.List;
 
@@ -84,15 +88,17 @@ public class LookupController {
         return ResponseEntity.ok(ApiResponseWrapper.success(lookup));
     }
 
-    @Operation(summary = "Get all lookups", description = "Retrieves a list of all lookups in the system.")
+    @Operation(summary = "Get all lookups with filtering and pagination", description = "Retrieves a paginated list of lookups based on filter criteria.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved list of lookups.", content = @Content(schema = @Schema(implementation = LookupListResponse.class)))
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved list of lookups.", content = @Content(schema = @Schema(implementation = LookupPageResponse.class)))
     })
     @GetMapping
-    public ResponseEntity<ApiResponseWrapper<List<LookupDto>>> getAllLookups() {
-        List<LookupDto> lookups = getAllLookupsQueryHandler.execute();
-        return ResponseEntity.ok(ApiResponseWrapper.success(lookups));
+    public ResponseEntity<ApiResponseWrapper<PageableResponse<LookupDto>>> getAllLookups(
+            @ParameterObject @Valid LookupFilterRequest filter) {
+        Page<LookupDto> lookupsPage = getAllLookupsQueryHandler.execute(filter);
+        return ResponseEntity.ok(ApiResponseWrapper.success(lookupsPage));
     }
+
 
     @Operation(summary = "Get lookups by parent ID", description = "Retrieves a list of all child lookups for a given parent ID.")
     @ApiResponses({
@@ -108,19 +114,16 @@ public class LookupController {
 
     // --- OpenAPI Schema Helper Classes ---
 
-    /**
-     * OpenAPI-specific schema for a response containing a single LookupDto.
-     * This class is defined here solely for documentation purposes.
-     */
+
     @Schema(name = "LookupResponse", description = "API response containing a single lookup object.")
     public static class LookupResponse extends ApiResponseWrapper<LookupDto> {
     }
 
-    /**
-     * OpenAPI-specific schema for a response containing a list of LookupDto objects.
-     * This class is defined here solely for documentation purposes.
-     */
     @Schema(name = "LookupListResponse", description = "API response containing a list of lookup objects.")
     public static class LookupListResponse extends ApiResponseWrapper<List<LookupDto>> {
+    }
+
+    @Schema(name = "LookupPageResponse", description = "API response containing a paginated list of lookup objects.")
+    public static class LookupPageResponse extends ApiResponseWrapper<PageableResponse<LookupDto>> {
     }
 }

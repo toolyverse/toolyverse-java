@@ -1,24 +1,49 @@
 package toolyverse.io.toolyverse.domain.lookup.service.handler;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import toolyverse.io.toolyverse.domain.lookup.entity.Lookup;
 import toolyverse.io.toolyverse.domain.lookup.mapper.LookupMapper;
 import toolyverse.io.toolyverse.domain.lookup.model.dto.LookupDto;
+import toolyverse.io.toolyverse.domain.lookup.model.request.LookupFilterRequest;
 import toolyverse.io.toolyverse.domain.lookup.repository.LookupRepository;
+import toolyverse.io.toolyverse.domain.lookup.repository.spesification.LookupSpecification;
+import toolyverse.io.toolyverse.domain.shared.repository.specification.BaseSpecification;
+import toolyverse.io.toolyverse.infrastructure.handler.QueryWithParam;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class GetAllLookupsQueryHandler {
+public class GetAllLookupsQueryHandler implements QueryWithParam<LookupFilterRequest, Page<LookupDto>> {
 
     private final LookupRepository lookupRepository;
     private final LookupMapper lookupMapper;
 
+    @Override
     @Transactional(readOnly = true)
-    public List<LookupDto> execute() {
-        var lookups = lookupRepository.findAll();
-        return lookupMapper.toDtoList(lookups);
+    public Page<LookupDto> execute(LookupFilterRequest filter) {
+
+        Pageable pageable = PageRequest.of(
+                filter.getPage(),
+                filter.getSize(),
+                Sort.by(filter.getSortDir(), filter.getSortBy())
+        );
+
+        // Start with a neutral specification
+        Specification<Lookup> spec = (_, _, _) -> null;
+        spec = spec
+                .and(LookupSpecification.hasCodeLike(filter.getCode()))
+                .and(LookupSpecification.hasLookupType(filter.getLookupType()))
+                .and(LookupSpecification.isActive(filter.getIsActive()))
+                .and(BaseSpecification.createdBetween(filter.getStartDate(), filter.getEndDate()));
+
+        Page<Lookup> lookupsPage = lookupRepository.findAll(spec, pageable);
+        return lookupsPage.map(lookupMapper::toDto);
     }
 }
