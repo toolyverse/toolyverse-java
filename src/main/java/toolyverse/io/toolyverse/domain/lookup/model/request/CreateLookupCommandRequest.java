@@ -40,6 +40,6 @@ public class CreateLookupCommandRequest {
     @Schema(description = "The display order relative to siblings.", example = "2")
     private Integer displayOrder;
 
-    @Schema(description = "A map of language codes to translated descriptions.", example = "{\"tr\": \"Onay Bekliyor\"}")
+    @Schema(description = "A map of language codes to translated descriptions.", example = "{\"tr\": \"Onay Bekliyor\",\"en\": \"Pending Approval\"}")
     private Map<String, Object> translations;
 }

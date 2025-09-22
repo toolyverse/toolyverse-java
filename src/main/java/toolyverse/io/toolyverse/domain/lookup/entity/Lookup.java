@@ -14,9 +14,12 @@ import java.util.Map;
 import java.util.Objects;
 
 @Entity
+// Add the unique constraint here
 @Table(name = "lookups",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_lookup_parent_code", columnNames = {"parent_id", "code"})
+        },
         indexes = {
-                @Index(name = "idx_lookup_parent_code", columnList = "parent_id, code"),
                 @Index(name = "idx_lookup_type", columnList = "lookup_type"),
                 @Index(name = "idx_lookup_active", columnList = "is_active"),
                 @Index(name = "idx_lookup_hierarchy", columnList = "parent_id, display_order")

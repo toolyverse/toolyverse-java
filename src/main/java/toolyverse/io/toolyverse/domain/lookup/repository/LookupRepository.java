@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface LookupRepository extends BaseJpaRepository<Lookup, Long> {
     List<Lookup> findByParentId(Long parentId);
+
+    boolean existsByParentIdAndCode(Long parentId, String code);
 }
