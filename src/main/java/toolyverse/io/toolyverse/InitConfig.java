@@ -1,5 +1,6 @@
 package toolyverse.io.toolyverse;
 
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -10,6 +11,8 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
+
+import java.util.TimeZone;
 
 // ╔═══════════════════════════════════════════╗
 // ║    TODO: Add required annotations here    ║
@@ -26,6 +29,13 @@ import org.springframework.stereotype.Component;
 @Component
 @Configuration
 public class InitConfig implements CommandLineRunner {
+
+    @PostConstruct
+    public void init() {
+        // Set the default timezone for the entire application
+        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Istanbul"));
+        log.info("Default Timezone set to -> {}", TimeZone.getDefault().getID());
+    }
 
     @Override
     public void run(String... args) throws Exception {

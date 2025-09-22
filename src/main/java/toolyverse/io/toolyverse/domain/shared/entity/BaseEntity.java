@@ -12,6 +12,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import toolyverse.io.toolyverse.infrastructure.config.hibernate.SoftDeleteListener;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @NoArgsConstructor
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners({AuditingEntityListener.class, SoftDeleteListener.class})
 public abstract class BaseEntity {
 
 //    @Id
@@ -51,7 +52,6 @@ public abstract class BaseEntity {
     @Column(name = "deleted_at")
     protected LocalDateTime deletedAt;
 
-    @LastModifiedBy
     @Column(name = "deleted_by")
     protected String deletedBy;
 
