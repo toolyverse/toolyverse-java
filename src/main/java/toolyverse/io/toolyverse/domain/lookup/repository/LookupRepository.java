@@ -12,9 +12,15 @@ public interface LookupRepository extends BaseJpaRepository<Lookup, Long> {
 
     Optional<Lookup> findByCode(String code);
 
-    List<Lookup> findByParentCode(String parentCode);
+    Optional<Lookup> findByParentCodeAndCode(String parentCode, String code);
+
+    List<Lookup> findAllByParentCode(String parentCode);
 
     boolean existsByParentCodeAndCode(String parentCode, String code);
 
     boolean existsByParentCodeIsNullAndCode(String code);
+
+    Optional<Lookup> findByCodeAndParentCodeIsNull(String parentCode);
+
+
 }

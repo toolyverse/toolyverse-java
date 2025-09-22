@@ -1,9 +1,6 @@
 package toolyverse.io.toolyverse.domain.lookup.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import toolyverse.io.toolyverse.domain.lookup.entity.Lookup;
 import toolyverse.io.toolyverse.domain.lookup.model.dto.LookupDto;
 import toolyverse.io.toolyverse.domain.lookup.model.request.CreateLookupCommandRequest;
@@ -20,6 +17,8 @@ public interface LookupMapper {
 
     Lookup toEntity(CreateLookupCommandRequest request);
 
+    @Mapping(target = "code", ignore = true)
+    @Mapping(target = "parentId", ignore = true)
     void updateEntityFromRequest(UpdateLookupCommandRequest request, @MappingTarget Lookup entity);
 
     LookupDto toDto(Lookup entity);

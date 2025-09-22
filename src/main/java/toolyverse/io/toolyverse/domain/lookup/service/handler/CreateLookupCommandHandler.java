@@ -19,7 +19,7 @@ public class CreateLookupCommandHandler {
     @Transactional
     public void execute(CreateLookupCommandRequest request) {
         // Resolve parent's ID from its code.
-        String parentCode = resolveParentId(request.getParentCode());
+        String parentCode = resolveParentCode(request.getParentCode());
 
         // Validate that the new lookup code is unique in its context.
         validateUniqueness(request.getCode(), parentCode);
@@ -32,7 +32,7 @@ public class CreateLookupCommandHandler {
 
     // --- Private Helper Methods ---
 
-    private String resolveParentId(String parentCode) {
+    private String resolveParentCode(String parentCode) {
         if (!StringUtils.hasText(parentCode)) {
             return null;
         }

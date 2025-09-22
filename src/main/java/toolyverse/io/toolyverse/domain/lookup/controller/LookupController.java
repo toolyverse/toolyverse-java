@@ -33,7 +33,7 @@ public class LookupController {
     private final CreateLookupCommandHandler createLookupCommandHandler;
     private final UpdateLookupCommandHandler updateLookupCommandHandler;
     private final DeleteLookupCommandHandler deleteLookupCommandHandler;
-    private final GetLookupByIdQueryHandler getLookupByIdQueryHandler;
+    private final GetLookupByCodeQueryHandler getLookupByCodeQueryHandler;
     private final GetAllLookupsQueryHandler getAllLookupsQueryHandler;
     private final GetLookupsByParentIdQueryHandler getLookupsByParentIdQueryHandler;
 
@@ -56,11 +56,11 @@ public class LookupController {
             @ApiResponse(responseCode = "400", description = "Invalid request body.", content = @Content(schema = @Schema(implementation = ApiResponseWrapper.class))),
             @ApiResponse(responseCode = "404", description = "Lookup not found.", content = @Content(schema = @Schema(implementation = ApiResponseWrapper.class)))
     })
-    @PutMapping("/{id}")
+    @PutMapping("/{code}")
     public ResponseEntity<ApiResponseWrapper<Object>> updateLookup(
-            @Parameter(description = "ID of the lookup to update.", required = true, example = "1") @PathVariable Long id,
+            @Parameter(description = "Code of the lookup to update.", required = true, example = "PENDING_APPROVAL") @PathVariable String code,
             @Valid @RequestBody UpdateLookupCommandRequest request) {
-        updateLookupCommandHandler.execute(id, request);
+        updateLookupCommandHandler.execute(code, request);
         return ResponseEntity.ok(ApiResponseWrapper.successWithEmptyData());
     }
 
@@ -69,10 +69,10 @@ public class LookupController {
             @ApiResponse(responseCode = "200", description = "Lookup deleted successfully.", content = @Content(schema = @Schema(implementation = ApiResponseWrapper.class))),
             @ApiResponse(responseCode = "404", description = "Lookup not found.", content = @Content(schema = @Schema(implementation = ApiResponseWrapper.class)))
     })
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{code}")
     public ResponseEntity<ApiResponseWrapper<Object>> deleteLookup(
-            @Parameter(description = "ID of the lookup to delete.", required = true, example = "1") @PathVariable Long id) {
-        deleteLookupCommandHandler.execute(id);
+            @Parameter(description = "Code of the lookup to delete.", required = true, example = "PENDING_APPROVAL") @PathVariable String code) {
+        deleteLookupCommandHandler.execute(code);
         return ResponseEntity.ok(ApiResponseWrapper.successWithEmptyData());
     }
 
@@ -81,10 +81,10 @@ public class LookupController {
             @ApiResponse(responseCode = "200", description = "Lookup found.", content = @Content(schema = @Schema(implementation = LookupResponse.class))),
             @ApiResponse(responseCode = "404", description = "Lookup not found.", content = @Content(schema = @Schema(implementation = ApiResponseWrapper.class)))
     })
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseWrapper<LookupDto>> getLookupById(
-            @Parameter(description = "ID of the lookup to retrieve.", required = true, example = "1") @PathVariable Long id) {
-        LookupDto lookup = getLookupByIdQueryHandler.execute(id);
+    @GetMapping("/{code}")
+    public ResponseEntity<ApiResponseWrapper<LookupDto>> getLookupByCode(
+            @Parameter(description = "Code of the lookup to retrieve.", required = true, example = "PENDING_APPROVAL") @PathVariable String code) {
+        LookupDto lookup = getLookupByCodeQueryHandler.execute(code);
         return ResponseEntity.ok(ApiResponseWrapper.success(lookup));
     }
 

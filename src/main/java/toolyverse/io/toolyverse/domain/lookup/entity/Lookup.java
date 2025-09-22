@@ -33,7 +33,7 @@ public class Lookup extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @Column(name = "code", nullable = false, length = 100, unique = true)
+    @Column(name = "code", nullable = false, length = 100)
     private String code;
 
     @Column(name = "description", length = 255)

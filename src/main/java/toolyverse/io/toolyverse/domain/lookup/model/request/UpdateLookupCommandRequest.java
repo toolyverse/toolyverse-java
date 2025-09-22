@@ -1,7 +1,6 @@
 package toolyverse.io.toolyverse.domain.lookup.model.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,17 +15,18 @@ import java.util.Map;
 @AllArgsConstructor
 @Schema(description = "Request Object for updating a lookup item.")
 public class UpdateLookupCommandRequest {
-    @NotBlank(message = "Code cannot be blank.")
-    @Size(min = 2, max = 100, message = "Code must be between 2 and 100 characters.")
-    @Schema(description = "Unique code for the lookup item.", example = "APPROVED", requiredMode = Schema.RequiredMode.REQUIRED)
+
+    @Schema(description = "Unique code for the lookup item (used for identification only, not updated).",
+            example = "APPROVED", accessMode = Schema.AccessMode.READ_ONLY)
     private String code;
 
     @Size(max = 255, message = "Description cannot exceed 255 characters.")
     @Schema(description = "Detailed description of the lookup.", example = "Status for items that have been approved.")
     private String description;
 
-    @Schema(description = "The ID of the parent lookup if this is a child item.", example = "50")
-    private Long parentId;
+    @Size(max = 255, message = "Description cannot exceed 255 characters.")
+    @Schema(description = "The code of the parent lookup if this is a child item.", example = "STATUS_CODES")
+    private String parentCode;
 
     @Schema(description = "The active status of the lookup.", example = "true")
     private Boolean isActive;
