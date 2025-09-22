@@ -15,11 +15,11 @@ import java.util.Objects;
 @Entity
 @Table(name = "lookups",
         uniqueConstraints = {
-                @UniqueConstraint(name = "uk_lookup_parent_code", columnNames = {"parent_id", "code"})
+                @UniqueConstraint(name = "uk_lookup_parent_code", columnNames = {"parent_code", "code"})
         },
         indexes = {
                 @Index(name = "idx_lookup_active", columnList = "is_active"),
-                @Index(name = "idx_lookup_hierarchy", columnList = "parent_id, display_order")
+                @Index(name = "idx_lookup_hierarchy", columnList = "parent_code, display_order")
         })
 @Getter
 @Setter
