@@ -1,1 +1,0 @@
-package toolyverse.io.toolyverse.domain.lookup.repository.spesification;
