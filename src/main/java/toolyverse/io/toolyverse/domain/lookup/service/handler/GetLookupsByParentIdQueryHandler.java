@@ -17,8 +17,8 @@ public class GetLookupsByParentIdQueryHandler {
     private final LookupMapper lookupMapper;
 
     @Transactional(readOnly = true)
-    public List<LookupDto> execute(Long parentId) {
-        var lookups = lookupRepository.findByParentId(parentId);
+    public List<LookupDto> execute(String parentCode) {
+        var lookups = lookupRepository.findByParentCode(parentCode);
         return lookupMapper.toDtoList(lookups);
     }
 }

@@ -21,9 +21,9 @@ public class LookupSpecification {
                 return null;
             }
             if (lookupType == LookupType.GROUP) {
-                return cb.isNull(root.get("parentId"));
+                return cb.isNull(root.get("parentCode"));
             } else { // Assumes ITEM
-                return cb.isNotNull(root.get("parentId"));
+                return cb.isNotNull(root.get("parentCode"));
             }
         };
     }

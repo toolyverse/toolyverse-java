@@ -104,10 +104,10 @@ public class LookupController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully retrieved list of child lookups.", content = @Content(schema = @Schema(implementation = LookupListResponse.class)))
     })
-    @GetMapping("/by-parent/{parentId}")
+    @GetMapping("/by-parent/{parentCode}")
     public ResponseEntity<ApiResponseWrapper<List<LookupDto>>> getLookupsByParent(
-            @Parameter(description = "ID of the parent lookup.", required = true, example = "10") @PathVariable Long parentId) {
-        List<LookupDto> lookups = getLookupsByParentIdQueryHandler.execute(parentId);
+            @Parameter(description = "ID of the parent lookup.", required = true, example = "STATUS") @PathVariable String parentCode) {
+        List<LookupDto> lookups = getLookupsByParentIdQueryHandler.execute(parentCode);
         return ResponseEntity.ok(ApiResponseWrapper.success(lookups));
     }
 

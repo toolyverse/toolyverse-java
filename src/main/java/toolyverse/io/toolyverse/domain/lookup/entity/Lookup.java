@@ -39,8 +39,8 @@ public class Lookup extends BaseEntity {
     @Column(name = "description", length = 255)
     private String description;
 
-    @Column(name = "parent_id")
-    private Long parentId;
+    @Column(name = "parent_code", length = 255)
+    private String parentCode;
 
     @Column(name = "is_active", nullable = false)
     @Builder.Default

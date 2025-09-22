@@ -19,35 +19,35 @@ public class CreateLookupCommandHandler {
     @Transactional
     public void execute(CreateLookupCommandRequest request) {
         // Resolve parent's ID from its code.
-        Long parentId = resolveParentId(request.getParentCode());
+        String parentCode = resolveParentId(request.getParentCode());
 
         // Validate that the new lookup code is unique in its context.
-        validateUniqueness(request.getCode(), parentId, request.getParentCode());
+        validateUniqueness(request.getCode(), parentCode);
 
         // If validations pass, create and save the new lookup.
         var lookup = lookupMapper.toEntity(request);
-        lookup.setParentId(parentId);
+        lookup.setParentCode(parentCode);
         lookupRepository.save(lookup);
     }
 
     // --- Private Helper Methods ---
 
-    private Long resolveParentId(String parentCode) {
+    private String resolveParentId(String parentCode) {
         if (!StringUtils.hasText(parentCode)) {
             return null;
         }
 
         return lookupRepository.findByCode(parentCode)
-                .map(Lookup::getId)
+                .map(Lookup::getCode)
                 .orElseThrow(() -> new RuntimeException(
                         String.format("Parent lookup with code '%s' not found.", parentCode)
                 ));
     }
 
-    private void validateUniqueness(String code, Long parentId, String parentCode) {
-        if (parentId != null) {
+    private void validateUniqueness(String code, String parentCode) {
+        if (parentCode != null) {
             // Check for uniqueness within the parent group.
-            if (lookupRepository.existsByParentIdAndCode(parentId, code)) {
+            if (lookupRepository.existsByParentCodeAndCode(parentCode, code)) {
                 throw new IllegalStateException(
                         String.format("A lookup item with code '%s' already exists in the group with code '%s'.",
                                 code, parentCode)
@@ -55,7 +55,7 @@ public class CreateLookupCommandHandler {
             }
         } else {
             // Check for uniqueness among top-level groups.
-            if (lookupRepository.existsByParentIdIsNullAndCode(code)) {
+            if (lookupRepository.existsByParentCodeIsNullAndCode(code)) {
                 throw new IllegalStateException(
                         String.format("A top-level lookup group with code '%s' already exists.", code)
                 );
