@@ -11,11 +11,20 @@ public class LookupSpecification {
         return BaseSpecification.like("code", code);
     }
 
-    public static Specification<Lookup> hasLookupType(LookupType lookupType) {
-        return BaseSpecification.equals("lookupType", lookupType);
-    }
-
     public static Specification<Lookup> isActive(Boolean isActive) {
         return BaseSpecification.equals("isActive", isActive);
+    }
+
+    public static Specification<Lookup> isType(LookupType lookupType) {
+        return (root, query, cb) -> {
+            if (lookupType == null) {
+                return null;
+            }
+            if (lookupType == LookupType.GROUP) {
+                return cb.isNull(root.get("parentId"));
+            } else { // Assumes ITEM
+                return cb.isNotNull(root.get("parentId"));
+            }
+        };
     }
 }

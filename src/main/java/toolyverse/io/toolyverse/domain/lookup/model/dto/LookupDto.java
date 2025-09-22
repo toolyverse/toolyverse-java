@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import toolyverse.io.toolyverse.domain.lookup.enumeration.LookupType;
 import toolyverse.io.toolyverse.domain.shared.model.dto.BaseDto;
 
 import java.util.Map;
@@ -28,11 +27,8 @@ public class LookupDto extends BaseDto {
     @Schema(description = "A detailed description of what the lookup represents.", example = "Indicates that an item is currently active and operational.")
     private String description;
 
-    @Schema(description = "The type of the lookup, which can be a GROUP or an ITEM.", example = "ITEM")
-    private LookupType lookupType;
-
-    @Schema(description = "The ID of the parent lookup if this is a hierarchical item. Null for root items.", example = "100")
-    private Long parentId;
+    @Schema(description = "The code of the parent lookup if this is a child item.", example = "STATUS_CODES")
+    private String parentCode;
 
     @Schema(description = "Flag to indicate if the lookup is active and available for use.", example = "true")
     private Boolean isActive;

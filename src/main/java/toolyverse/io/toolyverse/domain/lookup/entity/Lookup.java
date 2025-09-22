@@ -5,7 +5,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.proxy.HibernateProxy;
-import toolyverse.io.toolyverse.domain.lookup.enumeration.LookupType;
 import toolyverse.io.toolyverse.domain.shared.entity.BaseEntity;
 import toolyverse.io.toolyverse.infrastructure.util.JsonConverter;
 
@@ -14,13 +13,11 @@ import java.util.Map;
 import java.util.Objects;
 
 @Entity
-// Add the unique constraint here
 @Table(name = "lookups",
         uniqueConstraints = {
                 @UniqueConstraint(name = "uk_lookup_parent_code", columnNames = {"parent_id", "code"})
         },
         indexes = {
-                @Index(name = "idx_lookup_type", columnList = "lookup_type"),
                 @Index(name = "idx_lookup_active", columnList = "is_active"),
                 @Index(name = "idx_lookup_hierarchy", columnList = "parent_id, display_order")
         })
@@ -36,15 +33,11 @@ public class Lookup extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @Column(name = "code", nullable = false, length = 100)
+    @Column(name = "code", nullable = false, length = 100, unique = true)
     private String code;
 
     @Column(name = "description", length = 255)
     private String description;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "lookup_type", nullable = false, length = 10)
-    private LookupType lookupType;
 
     @Column(name = "parent_id")
     private Long parentId;
@@ -60,15 +53,6 @@ public class Lookup extends BaseEntity {
     @Convert(converter = JsonConverter.class)
     @Builder.Default
     private Map<String, Object> translations = new HashMap<>();
-
-    public boolean isGroup() {
-        return LookupType.GROUP.equals(this.lookupType);
-    }
-
-    public boolean isItem() {
-        return LookupType.ITEM.equals(this.lookupType);
-    }
-
 
     @Override
     public String toString() {

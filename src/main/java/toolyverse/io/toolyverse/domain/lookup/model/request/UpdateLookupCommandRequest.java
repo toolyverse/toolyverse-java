@@ -2,13 +2,11 @@ package toolyverse.io.toolyverse.domain.lookup.model.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import toolyverse.io.toolyverse.domain.lookup.enumeration.LookupType;
 
 import java.util.Map;
 
@@ -26,10 +24,6 @@ public class UpdateLookupCommandRequest {
     @Size(max = 255, message = "Description cannot exceed 255 characters.")
     @Schema(description = "Detailed description of the lookup.", example = "Status for items that have been approved.")
     private String description;
-
-    @NotNull(message = "Lookup type must be specified.")
-    @Schema(description = "The type of the lookup, either GROUP or ITEM.", example = "ITEM", requiredMode = Schema.RequiredMode.REQUIRED)
-    private LookupType lookupType;
 
     @Schema(description = "The ID of the parent lookup if this is a child item.", example = "50")
     private Long parentId;

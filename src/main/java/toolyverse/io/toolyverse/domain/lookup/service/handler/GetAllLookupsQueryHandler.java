@@ -39,8 +39,8 @@ public class GetAllLookupsQueryHandler implements QueryWithParam<LookupFilterReq
         Specification<Lookup> spec = (_, _, _) -> null;
         spec = spec
                 .and(LookupSpecification.hasCodeLike(filter.getCode()))
-                .and(LookupSpecification.hasLookupType(filter.getLookupType()))
                 .and(LookupSpecification.isActive(filter.getIsActive()))
+                .and(LookupSpecification.isType(filter.getLookupType()))
                 .and(BaseSpecification.createdBetween(filter.getStartDate(), filter.getEndDate()));
 
         Page<Lookup> lookupsPage = lookupRepository.findAll(spec, pageable);

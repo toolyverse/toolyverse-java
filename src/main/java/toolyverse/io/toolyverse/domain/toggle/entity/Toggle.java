@@ -16,7 +16,6 @@ import java.util.Set;
 @Table(name = "toggles",
         indexes = {
                 @Index(name = "idx_toggle_key", columnList = "toggle_key"),
-                @Index(name = "idx_toggle_active", columnList = "is_active")
         })
 @Getter
 @Setter
