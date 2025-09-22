@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import toolyverse.io.toolyverse.domain.lookup.model.dto.LookupDto;
+import toolyverse.io.toolyverse.domain.lookup.model.parameter.UpdateLookupCommandHandlerParam;
 import toolyverse.io.toolyverse.domain.lookup.model.request.CreateLookupCommandRequest;
 import toolyverse.io.toolyverse.domain.lookup.model.request.LookupFilterRequest;
 import toolyverse.io.toolyverse.domain.lookup.model.request.UpdateLookupCommandRequest;
@@ -60,7 +61,7 @@ public class LookupController {
     public ResponseEntity<ApiResponseWrapper<Object>> updateLookup(
             @Parameter(description = "Code of the lookup to update.", required = true, example = "PENDING_APPROVAL") @PathVariable String code,
             @Valid @RequestBody UpdateLookupCommandRequest request) {
-        updateLookupCommandHandler.execute(code, request);
+        updateLookupCommandHandler.execute(new UpdateLookupCommandHandlerParam(code, request));
         return ResponseEntity.ok(ApiResponseWrapper.successWithEmptyData());
     }
 

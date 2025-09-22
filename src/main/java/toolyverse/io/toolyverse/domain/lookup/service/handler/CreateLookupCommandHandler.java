@@ -8,14 +8,16 @@ import toolyverse.io.toolyverse.domain.lookup.entity.Lookup;
 import toolyverse.io.toolyverse.domain.lookup.mapper.LookupMapper;
 import toolyverse.io.toolyverse.domain.lookup.model.request.CreateLookupCommandRequest;
 import toolyverse.io.toolyverse.domain.lookup.repository.LookupRepository;
+import toolyverse.io.toolyverse.infrastructure.handler.CommandWithParam;
 
 @Service
 @RequiredArgsConstructor
-public class CreateLookupCommandHandler {
+public class CreateLookupCommandHandler implements CommandWithParam<CreateLookupCommandRequest> {
 
     private final LookupRepository lookupRepository;
     private final LookupMapper lookupMapper;
 
+    @Override
     @Transactional
     public void execute(CreateLookupCommandRequest request) {
         // Resolve parent's ID from its code.
@@ -62,4 +64,5 @@ public class CreateLookupCommandHandler {
             }
         }
     }
+
 }

@@ -6,18 +6,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import toolyverse.io.toolyverse.domain.lookup.entity.Lookup;
 import toolyverse.io.toolyverse.domain.lookup.mapper.LookupMapper;
-import toolyverse.io.toolyverse.domain.lookup.model.request.UpdateLookupCommandRequest;
+import toolyverse.io.toolyverse.domain.lookup.model.parameter.UpdateLookupCommandHandlerParam;
 import toolyverse.io.toolyverse.domain.lookup.repository.LookupRepository;
+import toolyverse.io.toolyverse.infrastructure.handler.CommandWithParam;
+
 
 @Service
 @RequiredArgsConstructor
-public class UpdateLookupCommandHandler {
+public class UpdateLookupCommandHandler implements CommandWithParam<UpdateLookupCommandHandlerParam> {
 
     private final LookupRepository lookupRepository;
     private final LookupMapper lookupMapper;
 
     @Transactional
-    public void execute(String code, UpdateLookupCommandRequest request) {
+    public void execute(UpdateLookupCommandHandlerParam param) {
+        var code = param.code();
+        var request = param.request();
         Lookup lookup = findLookupByCode(code, request.getParentCode());
 
         // Only update allowed fields (excluding code and parentCode)

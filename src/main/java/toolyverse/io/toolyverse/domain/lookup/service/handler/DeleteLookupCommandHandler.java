@@ -6,10 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 import toolyverse.io.toolyverse.domain.lookup.entity.Lookup;
 import toolyverse.io.toolyverse.domain.lookup.repository.LookupRepository;
 import toolyverse.io.toolyverse.domain.shared.enumeration.DeletedStatus;
+import toolyverse.io.toolyverse.infrastructure.handler.CommandWithParam;
 
 @Service
 @RequiredArgsConstructor
-public class DeleteLookupCommandHandler {
+public class DeleteLookupCommandHandler implements CommandWithParam<Long> {
 
     private final LookupRepository lookupRepository;
 

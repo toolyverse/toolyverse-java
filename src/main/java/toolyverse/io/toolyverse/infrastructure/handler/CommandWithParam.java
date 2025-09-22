@@ -1,6 +1,6 @@
 package toolyverse.io.toolyverse.infrastructure.handler;
 
-public interface CommandWithParam<I, O> {
+public interface CommandWithParam<I> {
 
-    O execute(I input);
+   void execute(I input);
 }
