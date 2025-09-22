@@ -18,7 +18,7 @@ public interface LookupMapper {
     Lookup toEntity(CreateLookupCommandRequest request);
 
     @Mapping(target = "code", ignore = true)
-    @Mapping(target = "parentId", ignore = true)
+    @Mapping(target = "parentCode", ignore = true)
     void updateEntityFromRequest(UpdateLookupCommandRequest request, @MappingTarget Lookup entity);
 
     LookupDto toDto(Lookup entity);
