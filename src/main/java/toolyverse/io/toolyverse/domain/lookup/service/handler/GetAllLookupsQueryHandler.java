@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import toolyverse.io.toolyverse.domain.lookup.entity.Lookup;
 import toolyverse.io.toolyverse.domain.lookup.mapper.LookupMapper;
 import toolyverse.io.toolyverse.domain.lookup.model.dto.LookupDto;
@@ -26,7 +25,6 @@ public class GetAllLookupsQueryHandler implements QueryWithParam<LookupFilterReq
     private final LookupMapper lookupMapper;
 
     @Override
-    @Transactional(readOnly = true)
     public Page<LookupDto> execute(LookupFilterRequest filter) {
 
         Pageable pageable = PageRequest.of(

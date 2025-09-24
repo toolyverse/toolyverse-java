@@ -24,6 +24,7 @@ import toolyverse.io.toolyverse.infrastructure.response.ApiResponseWrapper;
 import toolyverse.io.toolyverse.infrastructure.response.PageableResponse;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/lookups")
@@ -37,6 +38,7 @@ public class LookupController {
     private final GetLookupByCodeQueryHandler getLookupByCodeQueryHandler;
     private final GetAllLookupsQueryHandler getAllLookupsQueryHandler;
     private final GetLookupsByParentIdQueryHandler getLookupsByParentIdQueryHandler;
+    private final GetAllLookupsWithMapQueryHandler getAllLookupsWithMapQueryHandler;
 
     // --- Controller Endpoints ---
 
@@ -113,6 +115,16 @@ public class LookupController {
     }
 
 
+    @Operation(summary = "Get all lookups", description = "Retrieves all list of lookups.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved list of lookups.", content = @Content(schema = @Schema(implementation = LookupAllResponse.class)))
+    })
+    @GetMapping("/all")
+    public ResponseEntity<ApiResponseWrapper<Map<String, List<LookupDto>>>> getAllLookupsWithoutPagination() {
+        var lookupsPage = getAllLookupsWithMapQueryHandler.execute();
+        return ResponseEntity.ok(ApiResponseWrapper.success(lookupsPage));
+    }
+
     // --- OpenAPI Schema Helper Classes ---
 
 
@@ -126,5 +138,9 @@ public class LookupController {
 
     @Schema(name = "LookupPageResponse", description = "API response containing a paginated list of lookup objects.")
     public static class LookupPageResponse extends ApiResponseWrapper<PageableResponse<LookupDto>> {
+    }
+
+    @Schema(name = "LookupAllResponse", description = "API response containing list of lookup objects.")
+    public static class LookupAllResponse extends ApiResponseWrapper<Map<String, List<LookupDto>>> {
     }
 }

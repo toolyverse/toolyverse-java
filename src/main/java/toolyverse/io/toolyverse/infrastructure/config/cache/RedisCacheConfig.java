@@ -1,5 +1,7 @@
 package toolyverse.io.toolyverse.infrastructure.config.cache;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -20,6 +22,7 @@ import java.util.HashSet;
 @Slf4j
 @EnableCaching
 @Configuration
+@RequiredArgsConstructor
 public class RedisCacheConfig {
 
     // Cache Manager Bean Names
@@ -29,15 +32,18 @@ public class RedisCacheConfig {
     public static final String REDIS_CACHE_MANAGER_TEN_MINUTES = "redisTenMinutesCacheManager";
     public static final String REDIS_CACHE_MANAGER_THIRTY_MINUTES = "redisThirtyMinutesCacheManager";
 
+
+    private final ObjectMapper objectMapper;
+
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
-
+        GenericJackson2JsonRedisSerializer jsonSerializer = new GenericJackson2JsonRedisSerializer(objectMapper);
         template.setKeySerializer(new StringRedisSerializer());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setValueSerializer(jsonSerializer);
         template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setHashValueSerializer(jsonSerializer);
 
         template.afterPropertiesSet();
         return template;
@@ -75,13 +81,14 @@ public class RedisCacheConfig {
     }
 
     private CacheManager buildRedisCacheManager(RedisConnectionFactory connectionFactory, Duration ttl) {
+        GenericJackson2JsonRedisSerializer jsonSerializer = new GenericJackson2JsonRedisSerializer(objectMapper);
+
         RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(ttl)
                 .serializeValuesWith(
-                        RedisSerializationContext.SerializationPair.fromSerializer(
-                                new GenericJackson2JsonRedisSerializer()
-                        )
+                        RedisSerializationContext.SerializationPair.fromSerializer(jsonSerializer)
                 );
+
         return RedisCacheManager.builder(connectionFactory)
                 .cacheDefaults(cacheConfiguration)
                 .initialCacheNames(new HashSet<>(CacheNames.getAllCacheNames()))

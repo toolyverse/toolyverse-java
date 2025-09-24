@@ -24,5 +24,5 @@ public interface LookupRepository extends BaseJpaRepository<Lookup, Long> {
 
     Optional<Lookup> findByCodeAndParentCodeIsNullAndDeletedAtIsNull(String parentCode);
 
-
+    List<Lookup> findAllByDeletedAtIsNull();
 }
