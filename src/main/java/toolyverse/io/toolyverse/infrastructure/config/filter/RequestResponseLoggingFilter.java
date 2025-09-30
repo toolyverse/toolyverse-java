@@ -67,6 +67,7 @@ public class RequestResponseLoggingFilter extends OncePerRequestFilter {
 //                .collect(Collectors.joining("\n"));
 
         log.debug("""
+                        
                         === Request ===
                         Client IP: {}
                         Method: {}
@@ -89,6 +90,7 @@ public class RequestResponseLoggingFilter extends OncePerRequestFilter {
 //                .collect(Collectors.joining("\n"));
 
         log.debug("""
+                        
                         === Response ===
                         Status: {}
                         Body: {}
