@@ -1,4 +1,8 @@
 # ==================== APPLICATION CONFIGURATION ====================
+server:
+#  shutdown: graceful
+  shutdown: immediate
+
 spring:
   application:
     name: toolyverse
@@ -80,6 +84,7 @@ logging:
   level:
     root: info
     toolyverse.io: debug
+    toolyverse.io.toolyverse.infrastructure.config.filter.RequestResponseLoggingFilter: debug
 
 # ==================== SWAGGER CONFIGURATION ====================
 springdoc:
@@ -117,13 +122,12 @@ aws:
 app-specific-configs:
   constants:
     default-auditor: SYSTEM
-  cache:
-    short:
-      ttl: 60
-    medium:
-      ttl: 120
-    default:
-      max-size: 1000
+  ignored-logging-paths:
+    - "/health"
+    - "/log-level"
+    - "/time"
+    - "/timezone"
+    - "/hello"
   security:
     jwt:
       secret-key: ${APP_JWT_SECRET_KEY}
@@ -139,3 +143,4 @@ app-specific-configs:
   storage:
     directory: ./storage
     allowed-extensions: jpg,jpeg,png,pdf,doc,docx
+

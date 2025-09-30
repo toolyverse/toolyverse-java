@@ -12,7 +12,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.concurrent.Executor;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Configuration
@@ -44,13 +46,51 @@ public class AsyncConfiguration implements AsyncConfigurer {
     @Slf4j
     private static class CustomAsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
 
+        private static final int MAX_PARAM_LENGTH = 200;
+
         @Override
-        public void handleUncaughtException(@NonNull Throwable throwable, Method method, Object... params) {
-            log.error("Exception occurred in async/scheduler method: {} , message: '{}'",
+        public void handleUncaughtException(@NonNull Throwable throwable, @NonNull Method method, @NonNull Object... params) {
+            log.error("Exception in async method '{}': {}",
                     method.getName(),
-                    ExceptionUtils.getRootCauseMessage(throwable));
-            for (Object param : params) {
-                log.error("Parameter value: {}", param);
+                    ExceptionUtils.getRootCauseMessage(throwable),
+                    throwable);
+
+            logMethodParameters(method, params);
+        }
+
+        private void logMethodParameters(Method method, Object[] params) {
+            if (params == null || params.length == 0) {
+                log.debug("Method '{}' called with no parameters", method.getName());
+                return;
+            }
+
+            try {
+                String paramString = Arrays.stream(params)
+                        .map(this::safeToString)
+                        .collect(Collectors.joining(", "));
+
+                log.error("Method '{}' parameters: [{}]", method.getName(), paramString);
+
+            } catch (Exception e) {
+                log.warn("Failed to log parameters for method '{}': {}",
+                        method.getName(),
+                        e.getMessage());
+            }
+        }
+
+        private String safeToString(Object obj) {
+            if (obj == null) {
+                return "null";
+            }
+
+            try {
+                String str = obj.toString();
+                if (str.length() > MAX_PARAM_LENGTH) {
+                    return str.substring(0, MAX_PARAM_LENGTH) + "... (truncated)";
+                }
+                return str;
+            } catch (Exception e) {
+                return obj.getClass().getSimpleName() + " (toString failed)";
             }
         }
     }
