@@ -1,6 +1,6 @@
 # ==================== APPLICATION CONFIGURATION ====================
 server:
-#  shutdown: graceful
+  #  shutdown: graceful
   shutdown: immediate
 
 spring:
@@ -123,11 +123,11 @@ app-specific-configs:
   constants:
     default-auditor: SYSTEM
   ignored-logging-paths:
-    - "/health"
-    - "/log-level"
-    - "/time"
-    - "/timezone"
-    - "/hello"
+    - "/sw.js"
+    - "/favicon.ico"
+    - "/swagger-ui/**"
+    - "/v3/api-docs/**"
+    - "/actuator/**"
   security:
     jwt:
       secret-key: ${APP_JWT_SECRET_KEY}
