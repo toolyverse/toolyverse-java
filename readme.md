@@ -1,6 +1,3 @@
-# API Response Standardization with Spring Boot & React
-
-An example of standardized API responses, internationalized exception handling, and frontend integration using Spring Boot backend with React frontend.
 
 ## Features
 
