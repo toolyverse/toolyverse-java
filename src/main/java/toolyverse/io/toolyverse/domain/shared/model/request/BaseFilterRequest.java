@@ -45,10 +45,8 @@ public class BaseFilterRequest {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
-
     public Sort.Direction getSortDir() {
         return this.sortDir.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
     }
-
 
 }

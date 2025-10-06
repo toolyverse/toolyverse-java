@@ -16,9 +16,9 @@ import java.util.Map;
 @JsonPropertyOrder({
         "error",
         "traceId",
-        "businessErrorCode",
         "message",
         "data",
+        "businessErrorCode",
         "validationErrors",
 })
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -34,9 +34,9 @@ public class ApiResponseWrapper<T> {
 
     // Common fields
     private Boolean error;
-    private String message;
     @Builder.Default
     private String traceId = MDC.get("traceId");
+    private String message;
 
     // Success response field
     private T data;
@@ -119,6 +119,4 @@ public class ApiResponseWrapper<T> {
                 .build();
     }
 
-
 }
-

@@ -8,7 +8,6 @@ import java.util.Optional;
 
 //  @Convert(converter = UpperCaseConverter.class)
 
-@Component
 @Converter
 public class UpperCaseConverter implements AttributeConverter<String, String> {
   @Override
