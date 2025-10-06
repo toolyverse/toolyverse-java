@@ -63,9 +63,9 @@
 ```
 
 - turkish
-  ![img1.png](assets/img1.png)
+  ![img1.png](../assets/img1.png)
 - english
-  ![img.png](assets/img.png)
+  ![img.png](../assets/img.png)
 
 ## Backend Implementation
 
