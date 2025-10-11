@@ -25,10 +25,7 @@ public class OtpService {
     private static final int OTP_EXPIRY_MINUTES = 8;
     private static final String OTP_KEY_PREFIX = "otp:";
 
-    /**
-     * Spring injects all beans that implement OtpSender and StringRedisTemplate
-     * StringRedisTemplate is automatically provided by Spring Boot
-     */
+
     public OtpService(StringRedisTemplate stringRedisTemplate, List<OtpSender> senderList) {
         this.stringRedisTemplate = stringRedisTemplate;
         for (OtpSender sender : senderList) {
@@ -36,9 +33,6 @@ public class OtpService {
         }
     }
 
-    /**
-     * Generates, saves, and sends an OTP using Redis with automatic TTL
-     */
     public void generateAndSendOtp(OtpRequest request) {
         // Validation
         if (request == null || request.destination() == null) {
@@ -72,9 +66,7 @@ public class OtpService {
                 request.destination(), request.sendingChannel(), OTP_EXPIRY_MINUTES);
     }
 
-    /**
-     * Validates a user-provided OTP using Redis
-     */
+
     public boolean validateOtp(ValidationRequest request) {
         String redisKey = buildRedisKey(request.destination(), request.type(), request.sendingChannel());
 
@@ -101,9 +93,6 @@ public class OtpService {
         return OTP_KEY_PREFIX + destination + ":" + type + ":" + channel;
     }
 
-    /**
-     * Generates a numeric OTP
-     */
     private String generateNumericOtp() {
         Random random = new Random();
         StringBuilder otp = new StringBuilder();

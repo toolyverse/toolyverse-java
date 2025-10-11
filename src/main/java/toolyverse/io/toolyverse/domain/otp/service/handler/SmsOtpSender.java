@@ -11,8 +11,6 @@ import toolyverse.io.toolyverse.domain.otp.service.OtpSender;
 @Slf4j
 public class SmsOtpSender implements OtpSender {
 
-    // private final NetGsmSendSmsUseCase netGsmSendSmsUseCase; // Injected dependency
-
     @Override
     public void send(String destination, String otp) {
         log.info("Sending SMS OTP {} to: {}", otp, destination);
