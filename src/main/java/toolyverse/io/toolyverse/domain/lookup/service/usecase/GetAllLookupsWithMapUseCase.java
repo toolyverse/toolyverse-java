@@ -1,4 +1,4 @@
-package toolyverse.io.toolyverse.domain.lookup.service.handler;
+package toolyverse.io.toolyverse.domain.lookup.service.usecase;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
@@ -9,7 +9,7 @@ import toolyverse.io.toolyverse.domain.lookup.model.dto.LookupDto;
 import toolyverse.io.toolyverse.domain.lookup.repository.LookupRepository;
 import toolyverse.io.toolyverse.infrastructure.config.cache.CacheNames;
 import toolyverse.io.toolyverse.infrastructure.config.cache.RedisCacheConfig;
-import toolyverse.io.toolyverse.infrastructure.handler.Query;
+import toolyverse.io.toolyverse.infrastructure.usecase.UseCaseWithOutput;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class GetAllLookupsWithMapQueryHandler implements Query<Map<String, List<LookupDto>>> {
+public class GetAllLookupsWithMapUseCase implements UseCaseWithOutput<Map<String, List<LookupDto>>> {
 
     private final LookupRepository lookupRepository;
     private final LookupMapper lookupMapper;

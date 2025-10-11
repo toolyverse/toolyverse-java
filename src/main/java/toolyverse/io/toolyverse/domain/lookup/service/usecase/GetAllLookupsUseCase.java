@@ -1,4 +1,4 @@
-package toolyverse.io.toolyverse.domain.lookup.service.handler;
+package toolyverse.io.toolyverse.domain.lookup.service.usecase;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,12 +14,12 @@ import toolyverse.io.toolyverse.domain.lookup.model.request.LookupFilterRequest;
 import toolyverse.io.toolyverse.domain.lookup.repository.LookupRepository;
 import toolyverse.io.toolyverse.domain.lookup.repository.spesification.LookupSpecification;
 import toolyverse.io.toolyverse.domain.shared.repository.specification.BaseSpecification;
-import toolyverse.io.toolyverse.infrastructure.handler.QueryWithParam;
+import toolyverse.io.toolyverse.infrastructure.usecase.UseCase;
 
 
 @Service
 @RequiredArgsConstructor
-public class GetAllLookupsQueryHandler implements QueryWithParam<LookupFilterRequest, Page<LookupDto>> {
+public class GetAllLookupsUseCase implements UseCase<LookupFilterRequest, Page<LookupDto>> {
 
     private final LookupRepository lookupRepository;
     private final LookupMapper lookupMapper;

@@ -1,1 +1,0 @@
-package toolyverse.io.toolyverse.domain._example.service.handler;

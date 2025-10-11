@@ -15,11 +15,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import toolyverse.io.toolyverse.domain.lookup.model.dto.LookupDto;
-import toolyverse.io.toolyverse.domain.lookup.model.parameter.UpdateLookupCommandHandlerParam;
+import toolyverse.io.toolyverse.domain.lookup.model.parameter.UpdateLookupUseCaseParam;
 import toolyverse.io.toolyverse.domain.lookup.model.request.CreateLookupCommandRequest;
 import toolyverse.io.toolyverse.domain.lookup.model.request.LookupFilterRequest;
 import toolyverse.io.toolyverse.domain.lookup.model.request.UpdateLookupCommandRequest;
-import toolyverse.io.toolyverse.domain.lookup.service.handler.*;
+import toolyverse.io.toolyverse.domain.lookup.service.usecase.*;
 import toolyverse.io.toolyverse.infrastructure.response.ApiResponseWrapper;
 import toolyverse.io.toolyverse.infrastructure.response.PageableResponse;
 
@@ -32,13 +32,13 @@ import java.util.Map;
 @Tag(name = "Lookup Management", description = "APIs for creating, reading, updating, and deleting system lookups.")
 public class LookupController {
 
-    private final CreateLookupCommandHandler createLookupCommandHandler;
-    private final UpdateLookupCommandHandler updateLookupCommandHandler;
-    private final DeleteLookupCommandHandler deleteLookupCommandHandler;
-    private final GetLookupByCodeQueryHandler getLookupByCodeQueryHandler;
-    private final GetAllLookupsQueryHandler getAllLookupsQueryHandler;
-    private final GetLookupsByParentIdQueryHandler getLookupsByParentIdQueryHandler;
-    private final GetAllLookupsWithMapQueryHandler getAllLookupsWithMapQueryHandler;
+    private final CreateLookupUseCase createLookupCommand;
+    private final UpdateLookupUseCase updateLookupCommand;
+    private final DeleteLookupUseCase deleteLookupCommand;
+    private final GetLookupByCodeUseCase getLookupByCodeQuery;
+    private final GetAllLookupsUseCase getAllLookupsQuery;
+    private final GetLookupsByParentIdUseCase getLookupsByParentIdQuery;
+    private final GetAllLookupsWithMapUseCase getAllLookupsWithMapQuery;
 
     // --- Controller Endpoints ---
 
@@ -49,7 +49,7 @@ public class LookupController {
     })
     @PostMapping
     public ResponseEntity<ApiResponseWrapper<Object>> createLookup(@Valid @RequestBody CreateLookupCommandRequest request) {
-        createLookupCommandHandler.execute(request);
+        createLookupCommand.execute(request);
         return new ResponseEntity<>(ApiResponseWrapper.successWithEmptyData(), HttpStatus.CREATED);
     }
 
@@ -63,7 +63,7 @@ public class LookupController {
     public ResponseEntity<ApiResponseWrapper<Object>> updateLookup(
             @Parameter(description = "Code of the lookup to update.", required = true, example = "PENDING_APPROVAL") @PathVariable String code,
             @Valid @RequestBody UpdateLookupCommandRequest request) {
-        updateLookupCommandHandler.execute(new UpdateLookupCommandHandlerParam(code, request));
+        updateLookupCommand.execute(new UpdateLookupUseCaseParam(code, request));
         return ResponseEntity.ok(ApiResponseWrapper.successWithEmptyData());
     }
 
@@ -75,7 +75,7 @@ public class LookupController {
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponseWrapper<Object>> deleteLookup(
             @Parameter(description = "ID of the lookup to delete.", required = true, example = "1") @PathVariable Long id) {
-        deleteLookupCommandHandler.execute(id);
+        deleteLookupCommand.execute(id);
         return ResponseEntity.ok(ApiResponseWrapper.successWithEmptyData());
     }
 
@@ -87,7 +87,7 @@ public class LookupController {
     @GetMapping("/{code}")
     public ResponseEntity<ApiResponseWrapper<LookupDto>> getLookupByCode(
             @Parameter(description = "Code of the lookup to retrieve.", required = true, example = "PENDING_APPROVAL") @PathVariable String code) {
-        LookupDto lookup = getLookupByCodeQueryHandler.execute(code);
+        LookupDto lookup = getLookupByCodeQuery.execute(code);
         return ResponseEntity.ok(ApiResponseWrapper.success(lookup));
     }
 
@@ -98,7 +98,7 @@ public class LookupController {
     @GetMapping
     public ResponseEntity<ApiResponseWrapper<PageableResponse<LookupDto>>> getAllLookups(
             @ParameterObject @Valid LookupFilterRequest filter) {
-        Page<LookupDto> lookupsPage = getAllLookupsQueryHandler.execute(filter);
+        Page<LookupDto> lookupsPage = getAllLookupsQuery.execute(filter);
         return ResponseEntity.ok(ApiResponseWrapper.success(lookupsPage));
     }
 
@@ -110,7 +110,7 @@ public class LookupController {
     @GetMapping("/by-parent/{parentCode}")
     public ResponseEntity<ApiResponseWrapper<List<LookupDto>>> getLookupsByParent(
             @Parameter(description = "ID of the parent lookup.", required = true, example = "STATUS") @PathVariable String parentCode) {
-        List<LookupDto> lookups = getLookupsByParentIdQueryHandler.execute(parentCode);
+        List<LookupDto> lookups = getLookupsByParentIdQuery.execute(parentCode);
         return ResponseEntity.ok(ApiResponseWrapper.success(lookups));
     }
 
@@ -121,7 +121,7 @@ public class LookupController {
     })
     @GetMapping("/all")
     public ResponseEntity<ApiResponseWrapper<Map<String, List<LookupDto>>>> getAllLookupsWithoutPagination() {
-        var lookupsPage = getAllLookupsWithMapQueryHandler.execute();
+        var lookupsPage = getAllLookupsWithMapQuery.execute();
         return ResponseEntity.ok(ApiResponseWrapper.success(lookupsPage));
     }
 

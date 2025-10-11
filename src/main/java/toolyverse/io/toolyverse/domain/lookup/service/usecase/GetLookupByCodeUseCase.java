@@ -1,4 +1,4 @@
-package toolyverse.io.toolyverse.domain.lookup.service.handler;
+package toolyverse.io.toolyverse.domain.lookup.service.usecase;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 import toolyverse.io.toolyverse.domain.lookup.mapper.LookupMapper;
 import toolyverse.io.toolyverse.domain.lookup.model.dto.LookupDto;
 import toolyverse.io.toolyverse.domain.lookup.repository.LookupRepository;
-import toolyverse.io.toolyverse.infrastructure.handler.QueryWithParam;
+import toolyverse.io.toolyverse.infrastructure.usecase.UseCase;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class GetLookupByCodeQueryHandler implements QueryWithParam<String, LookupDto> {
+public class GetLookupByCodeUseCase implements UseCase<String, LookupDto> {
 
     private final LookupRepository lookupRepository;
     private final LookupMapper lookupMapper;

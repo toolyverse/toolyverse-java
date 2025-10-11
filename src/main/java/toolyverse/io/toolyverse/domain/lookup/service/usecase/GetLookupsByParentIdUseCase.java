@@ -1,4 +1,4 @@
-package toolyverse.io.toolyverse.domain.lookup.service.handler;
+package toolyverse.io.toolyverse.domain.lookup.service.usecase;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -6,7 +6,7 @@ import toolyverse.io.toolyverse.domain.lookup.mapper.LookupMapper;
 import toolyverse.io.toolyverse.domain.lookup.model.dto.LookupDto;
 import toolyverse.io.toolyverse.domain.lookup.repository.LookupRepository;
 import toolyverse.io.toolyverse.infrastructure.exception.ExceptionMessage;
-import toolyverse.io.toolyverse.infrastructure.handler.QueryWithParam;
+import toolyverse.io.toolyverse.infrastructure.usecase.UseCase;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import static toolyverse.io.toolyverse.infrastructure.exception.ExceptionUtil.bu
 
 @Service
 @RequiredArgsConstructor
-public class GetLookupsByParentIdQueryHandler implements QueryWithParam<String, List<LookupDto>> {
+public class GetLookupsByParentIdUseCase implements UseCase<String, List<LookupDto>> {
 
     private final LookupRepository lookupRepository;
     private final LookupMapper lookupMapper;

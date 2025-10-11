@@ -1,4 +1,4 @@
-package toolyverse.io.toolyverse.domain.lookup.service.handler;
+package toolyverse.io.toolyverse.domain.lookup.service.usecase;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -7,16 +7,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import toolyverse.io.toolyverse.domain.lookup.entity.Lookup;
 import toolyverse.io.toolyverse.domain.lookup.mapper.LookupMapper;
-import toolyverse.io.toolyverse.domain.lookup.model.parameter.UpdateLookupCommandHandlerParam;
+import toolyverse.io.toolyverse.domain.lookup.model.parameter.UpdateLookupUseCaseParam;
 import toolyverse.io.toolyverse.domain.lookup.repository.LookupRepository;
 import toolyverse.io.toolyverse.infrastructure.config.cache.CacheNames;
 import toolyverse.io.toolyverse.infrastructure.config.cache.RedisCacheConfig;
-import toolyverse.io.toolyverse.infrastructure.handler.CommandWithParam;
+import toolyverse.io.toolyverse.infrastructure.usecase.UseCaseWithInput;
 
 
 @Service
 @RequiredArgsConstructor
-public class UpdateLookupCommandHandler implements CommandWithParam<UpdateLookupCommandHandlerParam> {
+public class UpdateLookupUseCase implements UseCaseWithInput<UpdateLookupUseCaseParam> {
 
     private final LookupRepository lookupRepository;
     private final LookupMapper lookupMapper;
@@ -24,7 +24,7 @@ public class UpdateLookupCommandHandler implements CommandWithParam<UpdateLookup
     @CacheEvict(value = CacheNames.CACHE_ALL_LOOKUPS, allEntries = true, cacheManager = RedisCacheConfig.REDIS_CACHE_MANAGER_FIVE_MINUTES)
     @Override
     @Transactional
-    public void execute(UpdateLookupCommandHandlerParam param) {
+    public void execute(UpdateLookupUseCaseParam param) {
         var code = param.code();
         var request = param.request();
         Lookup lookup = findLookupByCode(code, request.getParentCode());

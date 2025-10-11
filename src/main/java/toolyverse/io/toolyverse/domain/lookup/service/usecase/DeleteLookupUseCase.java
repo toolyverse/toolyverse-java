@@ -1,4 +1,4 @@
-package toolyverse.io.toolyverse.domain.lookup.service.handler;
+package toolyverse.io.toolyverse.domain.lookup.service.usecase;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -9,11 +9,11 @@ import toolyverse.io.toolyverse.domain.lookup.repository.LookupRepository;
 import toolyverse.io.toolyverse.domain.shared.enumeration.DeletedStatus;
 import toolyverse.io.toolyverse.infrastructure.config.cache.CacheNames;
 import toolyverse.io.toolyverse.infrastructure.config.cache.RedisCacheConfig;
-import toolyverse.io.toolyverse.infrastructure.handler.CommandWithParam;
+import toolyverse.io.toolyverse.infrastructure.usecase.UseCaseWithInput;
 
 @Service
 @RequiredArgsConstructor
-public class DeleteLookupCommandHandler implements CommandWithParam<Long> {
+public class DeleteLookupUseCase implements UseCaseWithInput<Long> {
 
     private final LookupRepository lookupRepository;
 
