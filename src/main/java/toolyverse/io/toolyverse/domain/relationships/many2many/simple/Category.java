@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 @Entity
 @EqualsAndHashCode(of = "id")
-@ToString(exclude = "products") // Sonsuz döngüyü engellemek için
+@ToString(exclude = "products") // Sonsuz döngüyü engelle
 public class Category {
 
     @Id
@@ -22,21 +22,7 @@ public class Category {
 
     private String name;
 
-    @OneToMany(
-            mappedBy = "category",
-            cascade = CascadeType.PERSIST // Kategori kaydedilince ürünler de edilsin
-    )
+    @ManyToMany(mappedBy = "categories") // İlişkinin Product'taki "categories" alanı tarafından yönetildiğini belirtir.
     private Set<Product> products = new HashSet<>();
 
-    // --- İlişkiyi senkronize tutmak için yardımcı metotlar ---
-
-    public void addProduct(Product product) {
-        this.products.add(product);
-        product.setCategory(this);
-    }
-
-    public void removeProduct(Product product) {
-        this.products.remove(product);
-        product.setCategory(null);
-    }
 }
