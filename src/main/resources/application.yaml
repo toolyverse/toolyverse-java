@@ -153,6 +153,8 @@ app-specific-configs:
       password: ${API_PASSWORD}
       token: ${API_TOKEN}
   storage:
+    image-upload-dir: /var/www/api.toolyverse.io/images/
+    image-base-url: https://api.toolyverse.io/images/
     directory: ./storage
     allowed-extensions: jpg,jpeg,png,pdf,doc,docx
 
