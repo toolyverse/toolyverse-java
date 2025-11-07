@@ -30,9 +30,11 @@ spring:
     hibernate:
       ddl-auto: update
     properties:
-      hibernate.format_sql: true
+      hibernate:
+        format_sql: true
       envers:
         audit_table_suffix: _history
+    show-sql: true
 
   # ==================== KAFKA CONFIGURATION ====================
   kafka:
@@ -64,6 +66,13 @@ spring:
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
 
+    # ==================== SERVLET & MULTIPART CONFIG ====================
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
 # Actuator configuration for monitoring and management
 management:
   endpoints:
@@ -85,6 +94,9 @@ logging:
     root: info
     toolyverse.io: debug
     toolyverse.io.toolyverse.infrastructure.config.filter.RequestResponseLoggingFilter: debug
+    org:
+      hibernate:
+        type: trace
 
 # ==================== SWAGGER CONFIGURATION ====================
 springdoc:
